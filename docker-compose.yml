@@ -1,0 +1,17 @@
+version: '3'
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: 12345678
+      MARIADB_USER: juliano
+      MARIADB_PASSWORD: 12345678
+      MARIADB_DATABASE: msuser
+    ports:
+      - 3306:3306
+    restart: always
+    volumes:
+      - mariadb_volume:/var/lib/mysql
+volumes:
+  mariadb_volume:
