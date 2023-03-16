@@ -9,9 +9,19 @@ services:
       MARIADB_PASSWORD: 12345678
       MARIADB_DATABASE: msuser
     ports:
-      - 3306:3306
+      - "3306:3306"
     restart: always
     volumes:
       - mariadb_volume:/var/lib/mysql
+  queue:
+    image: rabbitmq:3-management
+    container_name: queue
+    environment:
+      - RABBITMQ_DEFAULT_USER=juliano
+      - RABBITMQ_DEFAULT_PASS=12345678
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    restart: always
 volumes:
   mariadb_volume:
