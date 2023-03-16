@@ -4,7 +4,9 @@ package com.example.user.unit;
 import com.example.user.core.domain.User;
 import com.example.user.core.exceptions.ValidationException;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class UserTest {
     @Test

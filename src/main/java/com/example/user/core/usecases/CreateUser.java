@@ -4,7 +4,7 @@ import com.example.user.core.domain.User;
 import com.example.user.core.domain.UserRepository;
 import com.example.user.core.exceptions.UserAlreadyExistsException;
 import com.example.user.infra.adapters.Queue;
-import org.springframework.util.SerializationUtils;
+import com.google.gson.JsonObject;
 
 import java.util.UUID;
 
@@ -25,7 +25,11 @@ public class CreateUser {
             throw new UserAlreadyExistsException();
         }
         this.userRepository.save(user);
-        this.queue.publisher("CreatedUser", user.id.getBytes());
+        JsonObject userObject = new JsonObject();
+        userObject.addProperty("id", user.id);
+        userObject.addProperty("name", user.name);
+        userObject.addProperty("email", user.email);
+        this.queue.publisher("CreatedUser", userObject.toString().getBytes());
         return new CreateUserOutput(user.id);
     }
 }

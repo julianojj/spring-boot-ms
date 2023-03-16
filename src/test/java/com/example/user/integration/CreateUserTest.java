@@ -8,19 +8,17 @@ import com.example.user.core.usecases.CreateUserOutput;
 import com.example.user.infra.adapters.Queue;
 import com.example.user.infra.adapters.RabbitMQ;
 import com.example.user.infra.repository.UserRepositoryDatabase;
-
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreateUserTest {
     Connection connection;
     UserRepository userRepository;
     Queue queue;
-
 
     public CreateUserTest() throws Exception {
         this.connection = DriverManager.getConnection(
