@@ -12,6 +12,7 @@ services:
       - "3306:3306"
     restart: always
     volumes:
+      - ./script.sql:/docker-entrypoint-initdb.d/script.sql
       - mariadb_volume:/var/lib/mysql
   queue:
     image: rabbitmq:3-management
