@@ -5,17 +5,26 @@ import com.example.user.core.exceptions.ValidationException;
 import java.util.regex.Pattern;
 
 public class User {
-    public final String id;
-    public final String name;
-    public final String email;
-    public final String password;
+    public  String id;
+    public  String name;
+    public  String email;
+    public String password;
 
-    public User(String id, String name, String email, String password) throws Exception {
+    private User(String id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.validate();
+    }
+
+    public static User create(String id, String name, String email, String password) throws Exception {
+        User user = new User(id, name, email, password);
+        user.validate();
+        return user;
+    }
+
+    public static User createExistingUser(String id, String name, String email, String password) {
+        return new User(id, name, email, password);
     }
 
     private void validate() throws Exception {
@@ -32,7 +41,7 @@ public class User {
 
     private boolean isInvalidPassword() {
         Pattern passwordPattern = Pattern.compile(
-                "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$");
+                "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–{}:;',?/*~$^+=<>]).{8,20}$");
         return !passwordPattern.matcher(this.password).matches();
     }
 }
