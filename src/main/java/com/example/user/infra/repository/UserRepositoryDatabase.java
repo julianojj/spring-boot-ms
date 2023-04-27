@@ -38,7 +38,7 @@ public class UserRepositoryDatabase implements UserRepository {
         ResultSet userData = statement.executeQuery();
         User user = null;
         while (userData.next()) {
-            user = new User(
+            user = User.createExistingUser(
                     userData.getString("Id"),
                     userData.getString("Name"),
                     userData.getString("Email"),
@@ -57,7 +57,7 @@ public class UserRepositoryDatabase implements UserRepository {
         ResultSet userData = statement.executeQuery();
         User user = null;
         while (userData.next()) {
-            user = new User(
+            user = User.createExistingUser(
                     userData.getString("Id"),
                     userData.getString("Name"),
                     userData.getString("Email"),
