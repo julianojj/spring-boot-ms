@@ -12,7 +12,7 @@ public class UserTest {
     @Test
     public void returnExceptionIfEmptyId() {
         Exception err = assertThrows(ValidationException.class, () -> {
-            new User("", "Juliano", "juliano@test.com", "-Secr3t@");
+            User.create("", "Juliano", "juliano@test.com", "-Secr3t@");
         });
         assertEquals("Id cannot be empty", err.getMessage());
     }
@@ -20,7 +20,7 @@ public class UserTest {
     @Test
     public void returnExceptionIfEmptyName() {
         Exception err = assertThrows(ValidationException.class, () -> {
-            new User("1", "", "juliano@test.com", "-Secr3t@");
+            User.create("1", "", "juliano@test.com", "-Secr3t@");
         });
         assertEquals("Name cannot be empty", err.getMessage());
     }
@@ -28,7 +28,7 @@ public class UserTest {
     @Test
     public void returnExceptionIfInvalidEmail() {
         Exception err = assertThrows(ValidationException.class, () -> {
-            new User("1", "Juliano", "juliano@", "-Secr3t@");
+            User.create("1", "Juliano", "juliano@", "-Secr3t@");
         });
         assertEquals("Invalid email", err.getMessage());
     }
@@ -36,7 +36,7 @@ public class UserTest {
     @Test
     public void returnExceptionIfInvalidPassword() {
         Exception err = assertThrows(ValidationException.class, () -> {
-            new User("1", "Juliano", "juliano@test.com", "123456");
+            User.create("1", "Juliano", "juliano@test.com", "123456");
         });
         assertEquals("Invalid password", err.getMessage());
     }
