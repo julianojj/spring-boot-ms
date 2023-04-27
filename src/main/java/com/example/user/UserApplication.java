@@ -3,6 +3,8 @@ package com.example.user;
 import com.example.user.core.domain.UserRepository;
 import com.example.user.core.usecases.CreateUser;
 import com.example.user.core.usecases.GetUser;
+import com.example.user.infra.adapters.Bcrypt;
+import com.example.user.infra.adapters.Hash;
 import com.example.user.infra.adapters.Queue;
 import com.example.user.infra.adapters.RabbitMQ;
 import com.example.user.infra.repository.UserRepositoryDatabase;
@@ -11,6 +13,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,6 +23,7 @@ import java.sql.DriverManager;
 public class UserApplication {
 	private final UserRepository userRepository;
 	private final Queue queue;
+	private final Hash hash;
 
 	public UserApplication() throws Exception {
 		Dotenv dotenv = Dotenv.load();
@@ -30,6 +34,7 @@ public class UserApplication {
 		);
 		this.userRepository = new UserRepositoryDatabase(connection);
 		this.queue = new RabbitMQ();
+		this.hash = new Bcrypt();
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -37,8 +42,13 @@ public class UserApplication {
 	}
 
 	@Bean
+	public BCryptPasswordEncoder BCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
 	public CreateUser createUser() {
-		return new CreateUser(userRepository, queue);
+		return new CreateUser(userRepository, queue, hash);
 	}
 
 	@Bean
