@@ -10,7 +10,9 @@ import com.example.user.infra.adapters.RabbitMQ;
 import com.example.user.infra.repository.UserRepositoryDatabase;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +22,7 @@ import java.sql.DriverManager;
 
 @SpringBootApplication
 @RestController
+@EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
 public class UserApplication {
 	private final UserRepository userRepository;
 	private final Queue queue;
